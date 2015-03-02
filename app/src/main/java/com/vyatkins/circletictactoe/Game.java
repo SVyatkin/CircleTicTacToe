@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class Game extends Activity {
 
-    public final int SIZE_OF_BOARD = 12;
+    public final int SIZE_OF_BOARD = 8;
 
     private int player = 1;
     private int[][] board = new int[SIZE_OF_BOARD][SIZE_OF_BOARD];
