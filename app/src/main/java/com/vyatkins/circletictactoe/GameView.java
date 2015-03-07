@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.vyatkins.utils.Utils;
 
+import java.util.ArrayList;
+
 
 public class GameView extends View {
 
@@ -99,48 +101,14 @@ public class GameView extends View {
         canvas.drawText("Draw", 30, backgroundGrid.getHeight() + 130, text);
         canvas.drawText(String.valueOf(draws), 210, backgroundGrid.getHeight() + 130, text);
 
-        // test circle
-        paintCircle(canvas, paintC,
-                new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 2 + l_y/2)),
-                new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 3 + l_y/2)),
-                new Point ((int)(l_x * 5 + l_x/2), (int)(l_y * 2 + l_y/2))
-        );
-
-
-        paintCircle(canvas, paintC,
-                new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 2 + l_y/2)),
-                new Point ((int)(l_x * 5 + l_x/2), (int)(l_y * 2 + l_y/2)),
-                new Point ((int)(l_x * 5 + l_x/2), (int)(l_y * 3 + l_y/2))
-        );
-
-
-        paintCircle(canvas, paintC
-                          , new Point((int) (l_x * 2 + l_x / 2), (int) (l_y * 2 + l_y / 2))
-                          , new Point((int) (l_x * 4 + l_x / 2), (int) (l_y * 2 + l_y / 2))
-                          , new Point((int) (l_x * 5 + l_x / 2), (int) (l_y * 4 + l_y / 2)));
-
-        paintCircle(canvas, paintC
-                , new Point((int) (l_x * 4 + l_x / 2), (int) (l_y * 0 + l_y / 2))
-                , new Point((int) (l_x * 6 + l_x / 2), (int) (l_y * 1 + l_y / 2))
-                , new Point((int) (l_x * 7 + l_x / 2), (int) (l_y * 3 + l_y / 2)));
-
-        paintCircle(canvas, paintC
-                , new Point((int) (l_x * 3 + l_x / 2), (int) (l_y * 1 + l_y / 2))
-                , new Point((int) (l_x * 5 + l_x / 2), (int) (l_y * 1 + l_y / 2))
-                , new Point((int) (l_x * 5 + l_x / 2), (int) (l_y * 3 + l_y / 2)));
-
-        paintCircle(canvas, paintC
-                , new Point((int) (l_x * 3 + l_x / 2), (int) (l_y * 1 + l_y / 2))
-                , new Point((int) (l_x * 6 + l_x / 2), (int) (l_y * 3 + l_y / 2))
-                , new Point((int) (l_x * 1 + l_x / 2), (int) (l_y * 4 + l_y / 2)));
-    }
-
-    private void paintCircle(Canvas canvas, Paint paintC, Point a, Point b, Point c) {
-        Point center = Utils.getCenter(a, b, c);
-
-        float r2 = Utils.getRadius (center, a);
-
-        canvas.drawCircle(shiftBorder + center.x, center.y, r2, paintC);
+        if (game.getPlayerPoints().size() > 2) {
+            Utils.allCirclePaint(3, 0,
+                    game.getPlayerPoints(),
+                    canvas,
+                    paintC,
+                    shiftBorder,
+                    l_x);
+        }
     }
 
     @Override
@@ -170,6 +138,8 @@ public class GameView extends View {
             x = (x - shiftBorder) / bgWidth;
             y = y / bgHeight;
             Log.v("test x:y", String.valueOf(x) + " : " + String.valueOf(y));
+
+            game.addPoint(new Point(x,y));
 
             if (x < game.SIZE_OF_BOARD && x >= 0 && y < game.SIZE_OF_BOARD && y >= 0) {
                 isValidMove = game.setGrid(x, y, game.getPlayer());

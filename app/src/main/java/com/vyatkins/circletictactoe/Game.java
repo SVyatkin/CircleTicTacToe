@@ -1,9 +1,13 @@
 package com.vyatkins.circletictactoe;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Game extends Activity {
@@ -13,6 +17,7 @@ public class Game extends Activity {
     private int player = 1;
     private int[][] board = new int[SIZE_OF_BOARD][SIZE_OF_BOARD];
     private GameView gameView;
+    private List<Point> playerPoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,4 +80,12 @@ public class Game extends Activity {
         public void computerMove() {
 
         }
+
+    public void addPoint(Point point) {
+        this.playerPoints.add(point);
+    }
+
+    public List<Point> getPlayerPoints() {
+        return playerPoints;
+    }
 }
