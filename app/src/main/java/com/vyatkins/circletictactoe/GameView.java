@@ -13,8 +13,6 @@ import android.view.View;
 
 import com.vyatkins.utils.Utils;
 
-import java.util.ArrayList;
-
 
 public class GameView extends View {
 
@@ -67,25 +65,29 @@ public class GameView extends View {
         Paint text = new Paint();
         background.setColor(Color.WHITE);
         canvas.drawRect(0, 0, getWidth(), getHeight(), background);
-        shiftBorder = (getWidth() -  backgroundGrid.getWidth()) / 2;
+        shiftBorder = (getWidth() - backgroundGrid.getWidth()) / 2;
         canvas.drawBitmap(backgroundGrid, shiftBorder, 0, null);
-        float l_x = backgroundGrid.getWidth()/game.SIZE_OF_BOARD;
-        float l_y = backgroundGrid.getHeight()/game.SIZE_OF_BOARD;
+        float l_x = backgroundGrid.getWidth() / game.SIZE_OF_BOARD;
+        float l_y = backgroundGrid.getHeight() / game.SIZE_OF_BOARD;
+
+        Utils.allCirclePaint(3, 0,
+                game.getPlayerPoints(),
+                canvas,
+                paintC,
+                shiftBorder,
+                l_x);
 
         for (int i = 0; i < game.SIZE_OF_BOARD; i++)
             for (int j = 0; j < game.SIZE_OF_BOARD; j++) {
                 int pos = game.getGrid(i, j);
                 if (pos == 1) {
-                    canvas.drawCircle(l_x * i + shiftBorder + l_x/2, l_y * j + l_y/2, l_y/4, paint);
-
+                    canvas.drawCircle(l_x * i + shiftBorder + l_x / 2, l_y * j + l_y / 2, l_y / 4, paint);
                 }
                 if (pos == 2) {
-                    canvas.drawCircle(l_x * i + shiftBorder + l_x/2, l_y * j + l_y/2, l_y/4, paintC);
-
+                    canvas.drawCircle(l_x * i + shiftBorder + l_x / 2, l_y * j + l_y / 2, l_y / 4, paintC);
                 }
                 if (pos == 0) {
-                    canvas.drawCircle(l_x * i + shiftBorder + l_x/2, l_y * j + l_y/2, l_y/10, paintBoard);
-
+                    canvas.drawCircle(l_x * i + shiftBorder + l_x / 2, l_y * j + l_y / 2, l_y / 10, paintBoard);
                 }
             }
         //current rank
@@ -100,15 +102,6 @@ public class GameView extends View {
 
         canvas.drawText("Draw", 30, backgroundGrid.getHeight() + 130, text);
         canvas.drawText(String.valueOf(draws), 210, backgroundGrid.getHeight() + 130, text);
-
-        if (game.getPlayerPoints().size() > 2) {
-            Utils.allCirclePaint(3, 0,
-                    game.getPlayerPoints(),
-                    canvas,
-                    paintC,
-                    shiftBorder,
-                    l_x);
-        }
     }
 
     @Override
@@ -123,7 +116,7 @@ public class GameView extends View {
         } else if (action == MotionEvent.ACTION_UP) {
             int x = (int) event.getX();
             int y = (int) event.getY();
-            Log.v("real  x:y", String.valueOf(x) + " : " + String.valueOf(y) + " : " + shiftBorder + " : " + getWidth());
+//            Log.v("real  x:y", String.valueOf(x) + " : " + String.valueOf(y) + " : " + shiftBorder + " : " + getWidth());
 
             // if game over reset grid, and begin new game
             if (game.checkGameFinished() != 0) {
@@ -132,14 +125,14 @@ public class GameView extends View {
                 return false;
             }
 
-            int bgWidth = backgroundGrid.getWidth()  / game.SIZE_OF_BOARD;
+            int bgWidth = backgroundGrid.getWidth() / game.SIZE_OF_BOARD;
             int bgHeight = backgroundGrid.getHeight() / game.SIZE_OF_BOARD;
 
             x = (x - shiftBorder) / bgWidth;
             y = y / bgHeight;
-            Log.v("test x:y", String.valueOf(x) + " : " + String.valueOf(y));
+//            Log.v("test x:y", String.valueOf(x) + " : " + String.valueOf(y));
 
-            game.addPoint(new Point(x,y));
+            game.addPoint(new Point(x, y));
 
             if (x < game.SIZE_OF_BOARD && x >= 0 && y < game.SIZE_OF_BOARD && y >= 0) {
                 isValidMove = game.setGrid(x, y, game.getPlayer());

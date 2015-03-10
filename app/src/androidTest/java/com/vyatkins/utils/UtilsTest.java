@@ -9,6 +9,13 @@ public class UtilsTest extends TestCase {
     public void testGetCenter() throws Exception {
         int l_x = 10;
         int l_y = 10;
+
+        Point center0 = Utils.getCenter(
+                new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 2 + l_y/2)),
+                new Point ((int)(l_x * 3 + l_x/2), (int)(l_y * 3 + l_y/2)),
+                new Point ((int)(l_x * 3 + l_x/2), (int)(l_y * 1 + l_y/2))
+        );
+
         Point center = Utils.getCenter(
                 new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 2 + l_y/2)),
                 new Point ((int)(l_x * 4 + l_x/2), (int)(l_y * 3 + l_y/2)),
