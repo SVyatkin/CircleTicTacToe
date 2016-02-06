@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class Game extends Activity {
-
+// Size of Board
     public final int SIZE_OF_BOARD = 8;
 
     private int player = 1;
